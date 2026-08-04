@@ -1,0 +1,34 @@
+[project]
+name = "bancont"
+version = "0.1.0"
+description = "Teachable Pydantic AI harness demo: Query API with Agent and Weather Forecast Tool"
+readme = "README.md"
+authors = [
+    { name = "Peter Zigo", email = "peter.zigo@kinit.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.141.1",
+    "httpx>=0.28.1",
+    "logfire[fastapi]>=4.39.0",
+    "pydantic-ai>=2.23.0",
+    "python-dotenv>=1.2.2",
+    "uvicorn[standard]>=0.52.1",
+]
+
+[project.scripts]
+bancont = "bancont.app:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.21,<0.12.0"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
