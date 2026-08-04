@@ -50,16 +50,22 @@ agent: Agent[AppDeps, str] = Agent(
     name="bancont_agent",
     deps_type=AppDeps,
     instructions=(
-        "You answer each Query in a single turn. "
-        "For Bratislava weather (today or next 24 hours), call the weather_forecast tool. "
-        "For other topics, answer directly without tools. Be concise."
+        "You answer each Query in a single turn. Be concise. "
+        "Weather is always for Bratislava — that city is fixed and predefined. "
+        "Never ask the user for a city, location, coordinates, or place name. "
+        "For any weather Query (today / next 24 hours), even if no city is named, "
+        "immediately call weather_forecast and answer from its result. "
+        "For non-weather topics, answer directly without tools."
     ),
 )
 
 
 @agent.tool
 def weather_forecast(ctx: RunContext[AppDeps]) -> str:
-    """Get the live today / next-24h weather forecast for Bratislava (location is fixed)."""
+    """Bratislava weather for today / next 24 hours.
+
+    Location is fixed to Bratislava. Do not ask for or accept a city or location.
+    """
     return ctx.deps.forecast_fetcher()
 
 

@@ -20,6 +20,31 @@ FAKE_FORECAST = (
     "low rain chance (~10%)."
 )
 
+LOCATION_ASK_MARKERS = (
+    "which city",
+    "what city",
+    "which location",
+    "what location",
+    "where are you",
+    "provide a city",
+    "provide a location",
+    "tell me the city",
+    "tell me the location",
+)
+
+LOCATION_ARG_KEYS = frozenset(
+    {
+        "city",
+        "location",
+        "place",
+        "town",
+        "lat",
+        "lon",
+        "latitude",
+        "longitude",
+    }
+)
+
 
 @pytest.fixture
 def client(monkeypatch: pytest.MonkeyPatch) -> TestClient:
@@ -68,3 +93,31 @@ def test_weather_query_includes_tool_call_and_coherent_answer(
     # TestModel folds tool results into the Answer text — require forecast content there too.
     assert "Bratislava" in body["answer"]
     assert "18–24°C" in body["answer"] or "18-24" in body["answer"]
+
+
+def test_weather_query_without_city_uses_fixed_bratislava(
+    client: TestClient,
+) -> None:
+    """Bratislava is predefined — a weather Query must not ask for city/location."""
+    with agent.override(model=TestModel()):
+        response = client.post(
+            "/query",
+            json={"query": "What's the weather today?"},
+        )
+
+    assert response.status_code == 200
+    body = response.json()
+
+    weather_calls = [
+        tc for tc in body["tool_calls"] if tc["tool_name"] == "weather_forecast"
+    ]
+    assert weather_calls, "expected Weather Forecast Tool Call without requiring a city"
+
+    weather_call = weather_calls[0]
+    arg_keys = {k.lower() for k in weather_call["args"]}
+    assert arg_keys.isdisjoint(LOCATION_ARG_KEYS)
+    assert weather_call["result_summary"] == FAKE_FORECAST
+
+    answer_lower = body["answer"].lower()
+    assert not any(marker in answer_lower for marker in LOCATION_ASK_MARKERS)
+    assert "bratislava" in answer_lower
