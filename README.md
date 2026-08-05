@@ -1,4 +1,4 @@
-# Bancont Demo
+# Bencont Demo
 
 Teachable FastAPI + Pydantic AI harness: `POST /query` accepts a Query, the Agent may call the Bratislava Weather Forecast Tool, and the Answer (plus Tool Calls) is returned over HTTP.
 
