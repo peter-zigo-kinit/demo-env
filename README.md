@@ -10,6 +10,32 @@ The FastAPI + Pydantic AI Query API in this tree is a **side product**: a small 
 2. **Bootstrap once** — install skills and wire the repo without stuffing install steps into `AGENTS.md`.
 3. **(Optional side product)** — a teachable `POST /query` agent with a Bratislava weather tool, if you want something concrete to run after setup.
 
+## Environment (`.env example`)
+
+Copy the template and fill in secrets:
+
+```bash
+cp ".env example" .env
+```
+
+**Model provider (required to talk to a live Agent)** — you need credentials for **some** chat-model vendor. This repo’s `.env example` shows **Azure OpenAI** (`AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_VERSION`, `AZURE_OPENAI_DEPLOYMENT`) because that matched the original demo environment ([ADR-0001](docs/adr/0001-azure-openai.md)).
+
+You can use **Azure OpenAI, OpenAI, Anthropic, or any other vendor Pydantic AI supports**. Put the vendor’s env vars in `.env`; a coding agent should **adapt the Agent wiring to whatever those settings imply** (don’t hard-require Azure if the env is clearly OpenAI-only, etc.).
+
+**Logfire (optional)** — `LOGFIRE_API_KEY` (or `LOGFIRE_TOKEN`) enables tracing. Without it the app should still run; observability is nice-to-have, not a blocker.
+
+| Variable | Required? | Role |
+| --- | --- | --- |
+| `AZURE_OPENAI_*` / `OPENAI_API_KEY` / other vendor keys | **One model stack** | Powers the Agent |
+| `LOGFIRE_API_KEY` or `LOGFIRE_TOKEN` | Optional | Sends traces to Logfire |
+
+## How to operate (sequence)
+
+1. **Use the setup prompt** — paste [`example_prompt/SETUP-PROMPT.md`](example_prompt/SETUP-PROMPT.md) into a coding agent to install skills, create a thin `AGENTS.md`, and wire agent-agnostic folders/symlinks. For more detail on what that layout means and how `AGENTS.md` should stay small, read [`example_prompt/AGENT-AGNOSTIC-SETUP.md`](example_prompt/AGENT-AGNOSTIC-SETUP.md).
+2. **Mimic `/grill-with-docs`** — run a grilling session the same way as in [`example_prompt/GRILL-WITH-DOCS-CONVERSATION.md`](example_prompt/GRILL-WITH-DOCS-CONVERSATION.md): one decision at a time, lock shared understanding, update `CONTEXT.md` / ADRs — don’t implement yet.
+
+After that, continue with the Matt Pocock loop below (`setup-matt-pocock-skills` once per repo → `/to-tickets` → `/implement`, …).
+
 ## Example prompts
 
 | Doc | Location | Role |
@@ -65,26 +91,7 @@ Closed issues from this demo’s side-product build:
 
 ## Side-product app (optional)
 
-Only needed if you want to run the Query API that came out of the grill session.
-
-### Environment (`.env example`)
-
-Copy the template and fill in secrets:
-
-```bash
-cp ".env example" .env
-```
-
-**Model provider (required to talk to a live Agent)** — you need credentials for **some** chat-model vendor. This repo’s `.env example` shows **Azure OpenAI** (`AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_VERSION`, `AZURE_OPENAI_DEPLOYMENT`) because that matched the original demo environment ([ADR-0001](docs/adr/0001-azure-openai.md)).
-
-You can use **Azure OpenAI, OpenAI, Anthropic, or any other vendor Pydantic AI supports**. Put the vendor’s env vars in `.env`; a coding agent should **adapt the Agent wiring to whatever those settings imply** (don’t hard-require Azure if the env is clearly OpenAI-only, etc.).
-
-**Logfire (optional)** — `LOGFIRE_API_KEY` (or `LOGFIRE_TOKEN`) enables tracing. Without it the app should still run; observability is nice-to-have, not a blocker.
-
-| Variable | Required? | Role |
-| --- | --- | --- |
-| `AZURE_OPENAI_*` / `OPENAI_API_KEY` / other vendor keys | **One model stack** | Powers the Agent |
-| `LOGFIRE_API_KEY` or `LOGFIRE_TOKEN` | Optional | Sends traces to Logfire |
+Only needed if you want to run the Query API that came out of the grill session. Set up `.env` first (see [Environment](#environment-env-example) above).
 
 ```bash
 uv sync --group dev
