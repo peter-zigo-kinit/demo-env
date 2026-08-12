@@ -9,13 +9,13 @@ from fastapi import FastAPI
 
 import logfire
 
-from bancont.agent import run_query
-from bancont.deps import get_deps
-from bancont.models import QueryRequest, QueryResponse
+from bencont.agent import run_query
+from bencont.deps import get_deps
+from bencont.models import QueryRequest, QueryResponse
 
 load_dotenv()
 
-app = FastAPI(title="Bancont Demo", description="Pydantic AI harness Query API")
+app = FastAPI(title="Bencont Demo", description="Pydantic AI harness Query API")
 
 # Spec documents LOGFIRE_API_KEY; Logfire's send path keys off a write token.
 # Accept either LOGFIRE_TOKEN or LOGFIRE_API_KEY so the documented setup works.
@@ -31,7 +31,7 @@ else:
 logfire.configure(
     send_to_logfire=_send_to_logfire,
     token=_logfire_token,
-    service_name="bancont",
+    service_name="bencont",
     console=False,
 )
 logfire.instrument_fastapi(app)
@@ -48,7 +48,7 @@ def main() -> None:
     import uvicorn
 
     uvicorn.run(
-        "bancont.app:app",
+        "bencont.app:app",
         host=os.getenv("HOST", "127.0.0.1"),
         port=int(os.getenv("PORT", "8000")),
         reload=False,

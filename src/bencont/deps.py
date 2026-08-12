@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
-from bancont.weather import fetch_bratislava_forecast
+from bencont.weather import fetch_bratislava_forecast
 
 
 @dataclass

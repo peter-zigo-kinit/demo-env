@@ -28,6 +28,15 @@ Only main flow:
 - wayfinder — Plan a huge chunk of work, more than one agent session can hold, as a shared map of investigation tickets on the issue tracker — resolve them one at a time until the way to the destination is clear.
 - handoff — Compact the current conversation into a handoff document so another agent can continue the work.
 
+Also install https://github.com/pydantic/skills — all of them:
+
+- building-pydantic-ai-agents — Build AI agents with Pydantic AI (tools, capabilities, streaming, testing, multi-agent).
+- pydantic-ai-harness — Extend Pydantic AI agents with harness capabilities like Code Mode.
+- pydantic — Validate and serialize data with Pydantic.
+- logfire-instrumentation — Add Logfire observability.
+- logfire-query — Query and analyze Logfire telemetry.
+- logfire-ui — Open Logfire UI / live views / Explore links.
+
 Keep AGENTS.md small — just that this is a pydantic AI harness demo. Don't put the skill list or install instructions in there; install is one-time. Follow the aihero AGENTS.md idea: progressive disclosure, skills carry the workflows.
 
 Also create `.claude/skills` and `.cursor/skills` — but those should just be symlinks to the skills in `.agents/skills`.

@@ -1,5 +1,5 @@
 [project]
-name = "bancont"
+name = "bencont"
 version = "0.1.0"
 description = "Teachable Pydantic AI harness demo: Query API with Agent and Weather Forecast Tool"
 readme = "README.md"
@@ -17,7 +17,7 @@ dependencies = [
 ]
 
 [project.scripts]
-bancont = "bancont.app:main"
+bencont = "bencont.app:main"
 
 [dependency-groups]
 dev = [

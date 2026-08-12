@@ -1,4 +1,4 @@
-# Bancont Demo
+# Bencont Demo
 
 A teachable Pydantic AI harness demo: FastAPI accepts a query, an agent may call tools, and the response is returned over HTTP.
 

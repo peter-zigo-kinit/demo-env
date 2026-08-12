@@ -14,8 +14,8 @@ from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.models.test import TestModel
 from pydantic_ai.providers.azure import AzureProvider
 
-from bancont.deps import AppDeps, get_deps
-from bancont.models import ToolCall
+from bencont.deps import AppDeps, get_deps
+from bencont.models import ToolCall
 
 load_dotenv()
 
@@ -47,7 +47,7 @@ def _build_model() -> Model:
 
 agent: Agent[AppDeps, str] = Agent(
     _build_model(),
-    name="bancont_agent",
+    name="bencont_agent",
     deps_type=AppDeps,
     instructions=(
         "You answer each Query in a single turn. Be concise. "

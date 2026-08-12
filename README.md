@@ -1,19 +1,62 @@
 # Bencont Demo
 
-Teachable FastAPI + Pydantic AI harness: `POST /query` accepts a Query, the Agent may call the Bratislava Weather Forecast Tool, and the Answer (plus Tool Calls) is returned over HTTP.
+This repo’s **main purpose** is to show how to set up a project so coding agents stay interchangeable: shared skill folders, a thin `AGENTS.md`, and bootstrap prompts — not a product app.
 
-## Setup
+The FastAPI + Pydantic AI Query API in this tree is a **side product**: a small app that happened to get built after the harness was in place. Treat it as an example of “what you might build next,” not as the point of the demo.
+
+## What this demo teaches
+
+1. **Agent-agnostic layout** — one canonical skill store (`.agents/skills/`), vendor symlinks (`.claude/skills/`, `.cursor/skills/`), and a short standing brief (`AGENTS.md` / `CLAUDE.md`).
+2. **Bootstrap once** — install skills and wire the repo without stuffing install steps into `AGENTS.md`.
+3. **(Optional side product)** — a teachable `POST /query` agent with a Bratislava weather tool, if you want something concrete to run after setup.
+
+## Example prompts
+
+| Doc | Location | Role |
+| --- | --- | --- |
+| Setup prompt (paste to bootstrap skills) | [`example_prompt/SETUP-PROMPT.md`](example_prompt/SETUP-PROMPT.md) | Install skills + create thin `AGENTS.md` |
+| Agent-agnostic setup (how the layout works) | [`example_prompt/AGENT-AGNOSTIC-SETUP.md`](example_prompt/AGENT-AGNOSTIC-SETUP.md) | Explain folders, symlinks, what belongs in `AGENTS.md` |
+| Grill-with-docs conversation (essence) | [`example_prompt/GRILL-WITH-DOCS-CONVERSATION.md`](example_prompt/GRILL-WITH-DOCS-CONVERSATION.md) | Example design grill that shaped the side-product app |
+
+## How we use Matt Pocock skills
+
+Skills from [mattpocock/skills](https://github.com/mattpocock/skills) drive the engineering loop. Install them once into `.agents/skills/` (see setup prompts above). Then the **basic flow** is:
+
+```text
+setup-matt-pocock-skills   ← once per repo (tracker, triage labels, docs/agents/)
+        ↓
+grill-with-docs            ← stress-test the idea; update CONTEXT.md / ADRs
+        ↓
+to-spec                    ← optional: publish a spec to the issue tracker
+        ↓
+to-tickets                 ← break into tracer-bullet tickets with blockers
+        ↓
+implement                  ← build from tickets (often /tdd, then /code-review)
+        ↓
+handoff                    ← when another agent (or you later) continues
+```
+
+**What each step is for**
+
+| Skill | When |
+| --- | --- |
+| `setup-matt-pocock-skills` | First time in the repo — without this, `/to-spec` / `/to-tickets` don’t know the tracker |
+| `grill-with-docs` | Before coding — one decision at a time until shared understanding |
+| `to-spec` | Conversation is clear enough to publish as a tracker spec |
+| `to-tickets` | Spec/plan → small tickets with blocking edges (`ready-for-agent`, etc.) |
+| `implement` | Pick tickets and build; close with review before commit |
+| `handoff` | Session is done but work isn’t — compact context for the next agent |
+
+In this demo’s side-product path we first ran **`/setup-matt-pocock-skills`** (once per repo), then **`/grill-with-docs` → `/to-tickets` → implement**. See [`example_prompt/GRILL-WITH-DOCS-CONVERSATION.md`](example_prompt/GRILL-WITH-DOCS-CONVERSATION.md) for the grill essence.
+
+## Side-product app (optional)
+
+Only needed if you want to run the Query API that came out of the grill session.
 
 ```bash
 cp ".env example" .env   # fill in secrets
 uv sync --group dev
-```
-
-## Run
-
-```bash
-uv run bancont
-# or: uv run uvicorn bancont.app:app --reload
+uv run bencont
 ```
 
 ```bash
@@ -22,10 +65,6 @@ curl -s http://127.0.0.1:8000/query \
   -d '{"query":"What is the capital of Slovakia?"}'
 ```
 
-## Tests
-
 ```bash
 uv run pytest
 ```
-
-HTTP seam tests use `TestModel` and a fake forecast — no live Azure or Open-Meteo.

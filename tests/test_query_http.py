@@ -10,9 +10,9 @@ import pytest
 from fastapi.testclient import TestClient
 from pydantic_ai.models.test import TestModel
 
-from bancont.agent import agent
-from bancont.app import app
-from bancont.deps import AppDeps, set_deps
+from bencont.agent import agent
+from bencont.app import app
+from bencont.deps import AppDeps, set_deps
 
 
 FAKE_FORECAST = (

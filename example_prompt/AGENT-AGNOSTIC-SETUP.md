@@ -21,6 +21,7 @@ skills-lock.json         ← lockfile from `npx skills`
 | --- | --- | --- |
 | [anthropics/skills](https://github.com/anthropics/skills) | `npx skills add anthropics/skills` | `skill-creator` |
 | [mattpocock/skills](https://github.com/mattpocock/skills) | `npx skills add mattpocock/skills` | Main engineering flow only |
+| [pydantic/skills](https://github.com/pydantic/skills) | `npx skills add pydantic/skills` | All cross-agent skills (Pydantic AI, harness, Logfire) |
 
 **Main flow skills in this harness:**
 
@@ -36,7 +37,18 @@ skills-lock.json         ← lockfile from `npx skills`
 | `wayfinder` | Large work as investigation tickets |
 | `handoff` | Compact session for another agent |
 
-Supporting skills (`grilling`, `domain-modeling`, `tdd`, `code-review`, `codebase-design`) are **not** vendored by default. Install into `.agents/skills/` only when a main-flow skill needs them, then refresh vendor symlinks.
+**Pydantic skills in this harness:**
+
+| Skill | Role |
+| --- | --- |
+| `building-pydantic-ai-agents` | Build agents with Pydantic AI |
+| `pydantic-ai-harness` | Harness capabilities (e.g. Code Mode) |
+| `pydantic` | Models, validation, serialization |
+| `logfire-instrumentation` | Add Logfire observability |
+| `logfire-query` | Query Logfire telemetry |
+| `logfire-ui` | Open Logfire UI / Explore links |
+
+Supporting Matt Pocock skills (`grilling`, `domain-modeling`, `tdd`, `code-review`, `codebase-design`) are **not** vendored by default. Install into `.agents/skills/` only when a main-flow skill needs them, then refresh vendor symlinks.
 
 Install is a **one-time** repo bootstrap (see `SETUP-PROMPT.md`). Do not put install steps in `AGENTS.md`.
 
@@ -78,5 +90,6 @@ Guidance: [AGENTS.md (AI Hero dictionary)](https://www.aihero.dev/ai-coding-dict
 ## Related files
 
 - Reusable bootstrap prompt: [`SETUP-PROMPT.md`](./SETUP-PROMPT.md)
+- Example grill conversation (side-product app design): [`GRILL-WITH-DOCS-CONVERSATION.md`](./GRILL-WITH-DOCS-CONVERSATION.md)
 - Lockfile: `/skills-lock.json`
 - Standing brief: `/AGENTS.md`
