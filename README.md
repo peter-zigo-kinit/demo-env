@@ -76,7 +76,7 @@ uv run bencont
 ```bash
 curl -s http://127.0.0.1:8000/query \
   -H 'Content-Type: application/json' \
-  -d '{"query":"What is the capital of Slovakia?"}'
+  -d '{"query":"Aka je dnesna teplota?"}'
 ```
 
 ```bash
