@@ -49,6 +49,20 @@ handoff                    ← when another agent (or you later) continues
 
 In this demo’s side-product path we first ran **`/setup-matt-pocock-skills`** (once per repo), then **`/grill-with-docs` → `/to-tickets` → implement**. See [`example_prompt/GRILL-WITH-DOCS-CONVERSATION.md`](example_prompt/GRILL-WITH-DOCS-CONVERSATION.md) for the grill essence.
 
+### `/to-tickets` → GitHub issues → `/implement`
+
+`/to-tickets` turns the grilled plan into **tracer-bullet tickets on the GitHub project** ([`peter-zigo-kinit/demo-env`](https://github.com/peter-zigo-kinit/demo-env/issues)). Each ticket is an issue you can label `ready-for-agent`, pick up, and build with `/implement` (blockers stay visible as linked issues).
+
+Closed issues from this demo’s side-product build:
+
+| # | Ticket | Link |
+| --- | --- | --- |
+| 1 | Scaffold Query API contract | https://github.com/peter-zigo-kinit/demo-env/issues/1 |
+| 2 | Wire Azure OpenAI Agent | https://github.com/peter-zigo-kinit/demo-env/issues/2 |
+| 3 | Add Bratislava Weather Forecast Tool | https://github.com/peter-zigo-kinit/demo-env/issues/3 |
+| 4 | Instrument with Logfire | https://github.com/peter-zigo-kinit/demo-env/issues/4 |
+| 5 | HTTP seam tests for Query | https://github.com/peter-zigo-kinit/demo-env/issues/5 |
+
 ## Side-product app (optional)
 
 Only needed if you want to run the Query API that came out of the grill session.
