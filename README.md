@@ -67,8 +67,26 @@ Closed issues from this demo’s side-product build:
 
 Only needed if you want to run the Query API that came out of the grill session.
 
+### Environment (`.env example`)
+
+Copy the template and fill in secrets:
+
 ```bash
-cp ".env example" .env   # fill in secrets
+cp ".env example" .env
+```
+
+**Model provider (required to talk to a live Agent)** — you need credentials for **some** chat-model vendor. This repo’s `.env example` shows **Azure OpenAI** (`AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_VERSION`, `AZURE_OPENAI_DEPLOYMENT`) because that matched the original demo environment ([ADR-0001](docs/adr/0001-azure-openai.md)).
+
+You can use **Azure OpenAI, OpenAI, Anthropic, or any other vendor Pydantic AI supports**. Put the vendor’s env vars in `.env`; a coding agent should **adapt the Agent wiring to whatever those settings imply** (don’t hard-require Azure if the env is clearly OpenAI-only, etc.).
+
+**Logfire (optional)** — `LOGFIRE_API_KEY` (or `LOGFIRE_TOKEN`) enables tracing. Without it the app should still run; observability is nice-to-have, not a blocker.
+
+| Variable | Required? | Role |
+| --- | --- | --- |
+| `AZURE_OPENAI_*` / `OPENAI_API_KEY` / other vendor keys | **One model stack** | Powers the Agent |
+| `LOGFIRE_API_KEY` or `LOGFIRE_TOKEN` | Optional | Sends traces to Logfire |
+
+```bash
 uv sync --group dev
 uv run bencont
 ```
