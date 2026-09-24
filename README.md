@@ -1,4 +1,4 @@
-# Bencont Demo
+# Demo agnostic project setup 
 
 This repo’s **main purpose** is to show how to set up a project so coding agents stay interchangeable: shared skill folders, a thin `AGENTS.md`, and bootstrap prompts — not a product app.
 
@@ -95,7 +95,7 @@ Only needed if you want to run the Query API that came out of the grill session.
 
 ```bash
 uv sync --group dev
-uv run bencont
+uv run demo
 ```
 
 ```bash
