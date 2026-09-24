@@ -1,4 +1,4 @@
-# Demo agnostic project setup 
+# Demo - agnostic project setup 
 
 This repo’s **main purpose** is to show how to set up a project so coding agents stay interchangeable: shared skill folders, a thin `AGENTS.md`, and bootstrap prompts — not a product app.
 
